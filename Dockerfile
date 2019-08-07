@@ -25,13 +25,15 @@ RUN git clone https://github.com/alliance-genome/jbrowse-config.git
 RUN git clone https://github.com/alliance-genome/AlliancePlugin.git
 RUN git clone --single-branch --branch jbrowse-staging https://github.com/WormBase/website-genome-browsers.git
 
-RUN rm /usr/share/nginx/html/index.html && rm /usr/share/nginx/html/50x.html && cp -r /jbrowse/* /usr/share/nginx/html/ && \
-    cp /jbrowse-config/jbrowse/jbrowse.conf /usr/share/nginx/html/ && \
-    cp -r /jbrowse-config/jbrowse/data /usr/share/nginx/html/ && \
-    cp -r /AlliancePlugin /usr/share/nginx/html/plugins && \
-    cp -r /website-genome-browsers /usr/share/nginx/html/plugins
+RUN mkdir /usr/share/nginx/html/jbrowse
 
-WORKDIR /usr/share/nginx/html/
+RUN rm /usr/share/nginx/html/index.html && rm /usr/share/nginx/html/50x.html && cp -r /jbrowse/* /usr/share/nginx/html/jbrowse && \
+    cp /jbrowse-config/jbrowse/jbrowse.conf /usr/share/nginx/html/jbrowse && \
+    cp -r /jbrowse-config/jbrowse/data /usr/share/nginx/html/jbrowse && \
+    cp -r /AlliancePlugin /usr/share/nginx/html/jbrowse/plugins && \
+    cp -r /website-genome-browsers/jbrowse/jbrowse/plugins/wormbase-glyphs /usr/share/nginx/html/jbrowse/plugins
+
+WORKDIR /usr/share/nginx/html/jbrowse
 
 #RUN npm install yarn
 #RUN ./node_modules/.bin/yarn
