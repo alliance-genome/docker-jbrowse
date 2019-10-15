@@ -20,7 +20,8 @@ RUN apt-get -y install nodejs
 #this probably isn't jbrowse-dev, so no adding plugins
 #RUN conda install -y --override-channels --channel iuc --channel conda-forge --channel bioconda --channel defaults jbrowse=1.16.6
 
-RUN git clone --single-branch --branch 1.16.6-release https://github.com/GMOD/jbrowse.git
+#RUN git clone --single-branch --branch 1.16.6-release https://github.com/GMOD/jbrowse.git
+RUN git clone --single-branch --branch fix_lower_casing_in_name_store https://github.com/GMOD/jbrowse.git
 RUN git clone --single-branch --branch stage https://github.com/alliance-genome/jbrowse-config.git 
 RUN git clone https://github.com/alliance-genome/AlliancePlugin.git
 RUN git clone --single-branch --branch jbrowse-staging https://github.com/WormBase/website-genome-browsers.git
