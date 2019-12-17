@@ -42,6 +42,13 @@ WORKDIR /usr/share/nginx/html/jbrowse
 
 RUN ./setup.sh
 
+RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_WBcel235_20.vcf.gz
+RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_GRCz11_22.vcf.gz
+RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_R6_20.vcf.gz
+RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_GRCm38_21.vcf.gz
+RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_Rnor60_19.vcf.gz
+
+
 VOLUME /data
 COPY docker-entrypoint.sh /
 CMD ["/docker-entrypoint.sh"]
