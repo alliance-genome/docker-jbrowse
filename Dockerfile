@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7
 
 RUN apt-get -qq update --fix-missing
-RUN apt-get --no-install-recommends -y install curl software-properties-common git build-essential zlib1g-dev libpng-dev perl-doc ca-certificates
+RUN apt-get --no-install-recommends -y install wget curl software-properties-common git build-essential zlib1g-dev libpng-dev perl-doc ca-certificates
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 
@@ -48,6 +48,11 @@ RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_R6_20.vcf.gz
 RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_GRCm38_21.vcf.gz
 RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_Rnor60_19.vcf.gz
 
+RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_WBcel235_20.vcf.gz.tbi
+RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_GRCz11_22.vcf.gz.tbi
+RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_R6_20.vcf.gz.tbi
+RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_GRCm38_21.vcf.gz.tbi
+RUN wget https://s3.amazonaws.com/agrjbrowse/VCF/VCF_Rnor60_19.vcf.gz.tbi
 
 VOLUME /data
 COPY docker-entrypoint.sh /
