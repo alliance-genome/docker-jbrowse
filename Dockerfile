@@ -26,9 +26,9 @@ RUN git clone --single-branch --branch jbrowse-3.0 https://github.com/alliance-g
 RUN git clone https://github.com/alliance-genome/agr_jbrowse_plugin.git
 RUN git clone --single-branch --branch jbrowse-staging https://github.com/WormBase/website-genome-browsers.git
 
-WORKDIR /agr_jbrowse_config/scripts
-
-RUN ./fetch_vcf.sh jbrowse
+#no longer need to fetch vcf files
+#WORKDIR /agr_jbrowse_config/scripts
+#RUN ./fetch_vcf.sh jbrowse
 
 RUN mkdir /usr/share/nginx/html/jbrowse
 
