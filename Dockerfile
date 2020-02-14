@@ -22,9 +22,9 @@ RUN apt-get -y install nodejs
 
 #RUN git clone --single-branch --branch 1.16.6-release https://github.com/GMOD/jbrowse.git
 RUN git clone --single-branch --branch 1.16.8-release https://github.com/GMOD/jbrowse.git
-RUN git clone --single-branch --branch jbrowse-3.0 https://github.com/alliance-genome/agr_jbrowse_config.git 
-RUN git clone https://github.com/alliance-genome/agr_jbrowse_plugin.git
-RUN git clone --single-branch --branch jbrowse-staging https://github.com/WormBase/website-genome-browsers.git
+RUN git clone --single-branch --branch 3.0 https://github.com/alliance-genome/agr_jbrowse_config.git 
+RUN git clone --single-branch --branch release-3.0.0 https://github.com/alliance-genome/agr_jbrowse_plugin.git
+RUN git clone --single-branch --branch agr-release-3.0.0 https://github.com/WormBase/website-genome-browsers.git
 
 #no longer need to fetch vcf files
 #WORKDIR /agr_jbrowse_config/scripts
