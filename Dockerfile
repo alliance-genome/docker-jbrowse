@@ -8,28 +8,8 @@
 # results in a image that is just over 100MB.
 #
 
-FROM nginx:latest as build
-ENV DEBIAN_FRONTEND noninteractive
+FROM gmod/jbrowse-buildenv:latest as build
 
-RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7
-
-RUN apt-get -qq update --fix-missing
-RUN apt-get --no-install-recommends -y install wget curl software-properties-common git build-essential zlib1g-dev libpng-dev perl-doc ca-certificates
-
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-
-RUN apt-get -y install nodejs
-
-#RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.6.14-Linux-x86_64.sh -O ~/miniconda.sh && \
-#    /bin/bash ~/miniconda.sh -b -p /conda/ && \
-#    rm ~/miniconda.sh
-
-#ENV PATH="/conda/bin:${PATH}"
-
-#this probably isn't jbrowse-dev, so no adding plugins
-#RUN conda install -y --override-channels --channel iuc --channel conda-forge --channel bioconda --channel defaults jbrowse=1.16.6
-
-#RUN git clone --single-branch --branch 1.16.6-release https://github.com/GMOD/jbrowse.git
 RUN git clone --single-branch --branch 1.16.8-release https://github.com/GMOD/jbrowse.git
 RUN git clone --single-branch --branch 3.0 https://github.com/alliance-genome/agr_jbrowse_config.git 
 RUN git clone --single-branch --branch release-3.0.0 https://github.com/alliance-genome/agr_jbrowse_plugin.git
