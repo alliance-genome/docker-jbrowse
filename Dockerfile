@@ -7,6 +7,9 @@
 # stage (called 'production') then copies files from the first stage and
 # results in a image that is just over 100MB.
 #
+# Also, note the change to the initial parent image: there is now a jbrowse-buildenv
+# image at docker hub
+#
 
 FROM gmod/jbrowse-buildenv:latest as build
 
