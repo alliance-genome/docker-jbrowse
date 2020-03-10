@@ -1,4 +1,14 @@
-# JBrowse [![Docker Repository on Quay](https://quay.io/repository/galaxy-genome-annotation/jbrowse/status "Docker Repository on Quay")](https://quay.io/repository/galaxy-genome-annotation/jbrowse)
+# JBrowse
+
+Based on [![Docker Repository on Quay](https://quay.io/repository/galaxy-genome-annotation/jbrowse/status "Docker Repository on Quay")](https://quay.io/repository/galaxy-genome-annotation/jbrowse)
+
+
+---------------
+
+This document needs to be completely rewritten.
+
+---------------
+
 
 Configurable docker image for [GMOD's JBrowse](https://github.com/gmod/jbrowse/).
 
