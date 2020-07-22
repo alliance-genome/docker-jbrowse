@@ -19,7 +19,6 @@
 FROM gmod/jbrowse-buildenv:latest as build
 
 # Actually JBrowse code; can bump the release tag and rebuild to get new versions
-#RUN git clone --single-branch --branch dev https://github.com/GMOD/jbrowse.git
 RUN git clone --single-branch --branch dev https://github.com/GMOD/jbrowse.git
 
 #agr_jbrowse_config contains the configuration files for the various species; they are
@@ -55,7 +54,6 @@ WORKDIR /usr/share/nginx/html/jbrowse
 #in the near futre, this setup command will be replaced with the yarn commands above
 #to make building faster (I don't want to mess with it right before a release)
 RUN ./setup.sh -f
-#RUN ./setup.sh
 
 #this is the magic that makes the production container so very small
 FROM nginx:latest as production
