@@ -1,0 +1,42 @@
+# pre-JBrowse build env
+# this is for the pre-build for doing flatfile-to-json so perl prereqs are needed
+# but it can be done with the pre
+
+#but if you install bioperl first with
+#cpanm -v --notest Bio::Perl@1.7.2 < /dev/null;
+#then install jbrowse with
+#cpanm --notest https://github.com/GMOD/jbrowse/archive/master.tar.gz
+#might work-
+
+
+FROM ubuntu:18.04 as build
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7
+
+RUN apt-get -qq update --fix-missing
+RUN apt-get --no-install-recommends -y install unzip gpg-agent wget curl software-properties-common git build-essential zlib1g-dev libpng-dev perl-doc ca-certificates 
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+
+RUN apt-get -y install nodejs
+
+RUN curl -L https://cpanmin.us | perl - App::cpanminus
+
+RUN cpanm --self-upgrade 
+
+
+RUN cpanm -v --notest Bio::Perl@1.7.2 < /dev/null
+
+#RUN cpanm --notest https://github.com/GMOD/jbrowse/archive/master.tar.gz
+
+RUN wget https://github.com/GMOD/jbrowse/releases/download/1.12.5-release/JBrowse-1.12.5.zip
+
+RUN unzip JBrowse-1.12.5.zip
+
+WORKDIR JBrowse-1.12.5
+
+RUN ./setup.sh
+
+
+
