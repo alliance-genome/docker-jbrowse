@@ -28,15 +28,17 @@ RUN cpanm --self-upgrade
 
 RUN cpanm -v --notest Bio::Perl@1.7.2 < /dev/null
 
-#RUN cpanm --notest https://github.com/GMOD/jbrowse/archive/master.tar.gz
-
 RUN wget https://github.com/GMOD/jbrowse/releases/download/1.12.5-release/JBrowse-1.12.5.zip
 
-RUN unzip JBrowse-1.12.5.zip
+RUN unzip JBrowse-1.12.5.zip; mv JBrowse-1.12.5 jbrowse
 
-WORKDIR JBrowse-1.12.5
+WORKDIR jbrowse
 
 RUN ./setup.sh
 
+WORKDIR /
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN ./aws/install
 
 
