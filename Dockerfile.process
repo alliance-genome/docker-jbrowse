@@ -7,6 +7,7 @@ FROM flatfile_jbrowse:latest as build
 ARG ACCESSKEY
 ARG SECRETKEY
 ARG RELEASE
+ARG SINGLE
 
 #agr_jbrowse_config contains the configuration files for the various species; they are
 #moved into the right place in the long RUN command below
@@ -21,7 +22,7 @@ WORKDIR /jbrowse
 RUN /agr_jbrowse_config/scripts/fetch_gff.sh
 
 #run it, passing in access and secret keys and AGR release
-RUN /agr_jbrowse_config/scripts/build_controler.pl --release $RELEASE  --awsaccess $ACCESSKEY --awssecret $SECRETKEY
+RUN /agr_jbrowse_config/scripts/build_controler.pl --release $RELEASE  --awsaccess $ACCESSKEY --awssecret $SECRETKEY --single $SINGLE
 
 
 #COPY docker-entrypoint.sh /
