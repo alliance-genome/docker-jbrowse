@@ -30,7 +30,7 @@ RUN git clone --single-branch --branch release-3.2.0 https://github.com/alliance
 RUN git clone --single-branch --branch release-3.1.0 https://github.com/alliance-genome/agr_jbrowse_plugin.git
 
 #website-genome-browsers pulls in some glyphs we use (like diamond, triangle and a modified gene glyph)
-RUN git clone --single-branch --branch agr-release-3.1.0 https://github.com/WormBase/website-genome-browsers.git
+RUN git clone --single-branch --branch multivariation_allele_glyph https://github.com/WormBase/website-genome-browsers.git
 
 #no longer need to fetch vcf files
 #WORKDIR /agr_jbrowse_config/scripts
