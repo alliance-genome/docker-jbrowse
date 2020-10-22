@@ -45,6 +45,9 @@ RUN rm /usr/share/nginx/html/index.html && rm /usr/share/nginx/html/50x.html && 
     cp -r /agr_jbrowse_plugin /usr/share/nginx/html/jbrowse/plugins/AlliancePlugin && \
     cp -r /website-genome-browsers/jbrowse/jbrowse/plugins/wormbase-glyphs /usr/share/nginx/html/jbrowse/plugins
 
+#getting the cached Alliance favicons to overwrite the J provide by JBrowse
+RUN cp /agr_jbrowse_config/jbrowse/agr_favicons/* /usr/share/nginx/html/jbrowse/img/favicons/
+
 WORKDIR /usr/share/nginx/html/jbrowse
 
 #RUN npm install yarn
