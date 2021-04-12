@@ -16,6 +16,10 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7
 
 RUN apt-get -qq update --fix-missing
 RUN apt-get --no-install-recommends -y install unzip gpg-agent wget curl software-properties-common git build-essential zlib1g-dev libpng-dev perl-doc ca-certificates 
+RUN apt-get --no-install-recommends -y install libstorable-perl liburi-perl libtest-needs-perl libio-string-perl liblist-moreutils-perl libtest-leaktrace-perl libexporter-tiny-perl libfile-readbackwards-perl cpanminus libconfig-tiny-perl libfile-copy-recursive-perl libfile-remove-perl libjson-perl liblog-log4perl-perl
+
+#install Bio::GFF3::LowLevel via cpanm
+RUN cpanm Bio::GFF3::LowLevel
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 
