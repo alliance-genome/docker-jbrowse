@@ -9,14 +9,25 @@
 #might work-
 
 
-FROM ubuntu:18.04 as build
+FROM ubuntu:20.04 as build
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7
 
 RUN apt-get -qq update --fix-missing
-RUN apt-get --no-install-recommends -y install unzip gpg-agent wget curl software-properties-common git build-essential zlib1g-dev libpng-dev perl-doc ca-certificates 
 
+#install basic command line tools
+RUN apt-get --no-install-recommends -y install genometools tabix unzip gpg-agent wget curl software-properties-common git build-essential zlib1g-dev libpng-dev perl-doc ca-certificates autoconf automake make gcc zlib1g-dev libbz2-dev liblzma-dev libcurl4-gnutls-dev libssl-dev
+
+#install AWS CLI
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN ./aws/install
+
+#Install perl modules for WB scripts
+RUN apt-get --no-install-recommends -y install libstorable-perl liburi-perl libtest-needs-perl libio-string-perl liblist-moreutils-perl libtest-leaktrace-perl libexporter-tiny-perl libfile-readbackwards-perl libconfig-tiny-perl libfile-copy-recursive-perl libfile-remove-perl libjson-perl liblog-log4perl-perl
+
+#install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 
 RUN apt-get -y install nodejs
@@ -28,6 +39,7 @@ RUN cpanm --self-upgrade
 
 RUN cpanm -v --notest Bio::Perl@1.7.2 < /dev/null
 
+
 RUN wget https://github.com/GMOD/jbrowse/releases/download/1.12.5-release/JBrowse-1.12.5.zip
 
 RUN unzip JBrowse-1.12.5.zip; mv JBrowse-1.12.5 jbrowse
@@ -37,8 +49,25 @@ WORKDIR jbrowse
 RUN ./setup.sh
 
 WORKDIR /
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-RUN unzip awscliv2.zip
-RUN ./aws/install
+
+#install Bio::GFF3::LowLevel via cpanm
+RUN cpanm -v Bio::GFF3::LowLevel
 
 
+#install genometools (via apt-get)
+
+#make arg: cairo=no
+#RUN git clone --single-branch --branch master https://github.com/genometools/genometools.git
+#WORKDIR /genometools
+#used to have make test but it runs really long
+#RUN make cairo=no; make cairo=no install
+#WORKDIR /
+
+
+#install htslib (to get bgzip)
+RUN wget https://github.com/samtools/samtools/releases/download/1.12/samtools-1.12.tar.bz2
+RUN tar jxvf samtools-1.12.tar.bz2
+WORKDIR /samtools-1.12
+RUN  ./configure --without-curses ; make ; make install
+
+WORKDIR /
