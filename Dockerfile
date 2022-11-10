@@ -16,7 +16,12 @@
 # S3 bucket.  This separation makes development and production issues easier
 # (in my opinion)
 
+
 FROM gmod/jbrowse-buildenv:latest as build
+
+ARG RELEASE=5.3.0
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
 
 # Actually JBrowse code; can bump the release tag and rebuild to get new versions
 RUN git clone --single-branch --branch dev https://github.com/GMOD/jbrowse.git
@@ -45,7 +50,8 @@ RUN rm /usr/share/nginx/html/index.html && rm /usr/share/nginx/html/50x.html && 
     cp /agr_jbrowse_config/jbrowse/jbrowse.conf /usr/share/nginx/html/jbrowse && \
     cp -r /agr_jbrowse_config/jbrowse/data /usr/share/nginx/html/jbrowse && \
     cp -r /agr_jbrowse_plugin /usr/share/nginx/html/jbrowse/plugins/AlliancePlugin && \
-    cp -r /website-genome-browsers/jbrowse/jbrowse/plugins/wormbase-glyphs /usr/share/nginx/html/jbrowse/plugins
+    cp -r /website-genome-browsers/jbrowse/jbrowse/plugins/wormbase-glyphs /usr/share/nginx/html/jbrowse/plugins && \
+    cp -r /agr_jbrowse_container/amplify /usr/share/nginx/html/jbrowse/
 
 #getting the cached Alliance favicons to overwrite the J provide by JBrowse
 RUN cp /agr_jbrowse_config/jbrowse/agr_favicons/* /usr/share/nginx/html/jbrowse/img/favicons/
@@ -61,22 +67,15 @@ WORKDIR /usr/share/nginx/html/jbrowse
 RUN ./setup.sh -f
 
 #this is the magic that makes the production container so very small
-FROM nginx:latest as production
+#FROM nginx:latest as production
 
-COPY --from=build /usr/share/nginx/html/jbrowse/dist /usr/share/nginx/html/jbrowse/dist
-COPY --from=build /usr/share/nginx/html/jbrowse/browser /usr/share/nginx/html/jbrowse/browser
-COPY --from=build /usr/share/nginx/html/jbrowse/css /usr/share/nginx/html/jbrowse/css
-COPY --from=build /usr/share/nginx/html/jbrowse/data /usr/share/nginx/html/jbrowse/data
-COPY --from=build /usr/share/nginx/html/jbrowse/img /usr/share/nginx/html/jbrowse/img
-COPY --from=build /usr/share/nginx/html/jbrowse/index.html /usr/share/nginx/html/jbrowse/index.html
-COPY --from=build /usr/share/nginx/html/jbrowse/jbrowse_conf.json /usr/share/nginx/html/jbrowse/jbrowse_conf.json
-COPY --from=build /usr/share/nginx/html/jbrowse/jbrowse.conf /usr/share/nginx/html/jbrowse/jbrowse.conf
-COPY --from=build /usr/share/nginx/html/jbrowse/LICENSE /usr/share/nginx/html/jbrowse/LICENSE
-COPY --from=build /usr/share/nginx/html/jbrowse/plugins /usr/share/nginx/html/jbrowse/plugins
-COPY --from=build /usr/share/nginx/html/jbrowse/site.webmanifest /usr/share/nginx/html/jbrowse/site.webmanifest
-COPY --from=build /usr/share/nginx/html/jbrowse/.htaccess /usr/share/nginx/html/jbrowse/.htaccess
+#Now, instead of creating a separate contain, make a zip and copy to s3 to deploy
+
+RUN zip -r jbrowse-release$RELEASE.zip .  -x node_modules/\* tests/\* sample_data/\*
+
+RUN AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY aws s3 cp --acl public-read jbrowse-release$RELEASE.zip s3://agrjbrowse/amplify/
 
 
-VOLUME /data
-COPY docker-entrypoint.sh /
-CMD ["/docker-entrypoint.sh"]
+#VOLUME /data
+#COPY docker-entrypoint.sh /
+#CMD ["/docker-entrypoint.sh"]
