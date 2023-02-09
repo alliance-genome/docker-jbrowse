@@ -17,7 +17,7 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7
 RUN apt-get -qq update --fix-missing
 
 #install basic command line tools
-RUN apt-get --no-install-recommends -y install genometools tabix unzip gpg-agent wget curl software-properties-common git build-essential zlib1g-dev libpng-dev perl-doc ca-certificates autoconf automake make gcc zlib1g-dev libbz2-dev liblzma-dev libcurl4-gnutls-dev libssl-dev
+RUN apt-get --no-install-recommends -y install bedtools bcftools genometools tabix unzip gpg-agent wget curl software-properties-common git build-essential zlib1g-dev libpng-dev perl-doc ca-certificates autoconf automake make gcc zlib1g-dev libbz2-dev liblzma-dev libcurl4-gnutls-dev libssl-dev
 
 #install AWS CLI
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
