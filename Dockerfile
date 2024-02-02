@@ -25,7 +25,7 @@ RUN git clone --single-branch --branch dev https://github.com/GMOD/jbrowse.git
 #moved into the right place in the long RUN command below
 #RUN git clone --single-branch --branch per-chrom-vcf https://github.com/alliance-genome/agr_jbrowse_config.git
 
-RUN git clone --single-branch --branch release-6.0.0 https://github.com/alliance-genome/agr_jbrowse_config.git
+RUN git clone --single-branch --branch release-7.0.0 https://github.com/alliance-genome/agr_jbrowse_config.git
 
 #agr_jbrowse_plugin contains a simple plugin that puts the AGR logo in the upper left corner of the page
 #this changes very infrequently. Pointing at the master branch for all builds
