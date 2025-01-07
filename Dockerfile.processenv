@@ -28,9 +28,16 @@ RUN ./aws/install
 RUN apt-get --no-install-recommends -y install libstorable-perl liburi-perl libtest-needs-perl libio-string-perl liblist-moreutils-perl libtest-leaktrace-perl libexporter-tiny-perl libfile-readbackwards-perl libconfig-tiny-perl libfile-copy-recursive-perl libfile-remove-perl libjson-perl liblog-log4perl-perl
 
 #install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+#RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+#RUN apt-get -y install nodejs
 
-RUN apt-get -y install nodejs
+RUN curl -sLf https://spacevim.org/install.sh | bash
+RUN nvm install 18
+RUN node -v
+RUN npm -v
+
+#install JBrowse 2 cli (to get JBrowse-aware GFF sorting)
+RUN npm install -g @jbrowse/cli
 
 RUN curl -L https://cpanmin.us | perl - App::cpanminus
 
@@ -78,3 +85,4 @@ RUN (wget -O - pi.dk/3 || lynx -source pi.dk/3 || curl pi.dk/3/ || \
 
 
 WORKDIR /
+
